@@ -1,0 +1,19 @@
+<h1>New Post</h1>
+
+<%= form_with model: @post do |form| %>
+  <div>
+    <%= form.hidden_field :author_id, :value => current_author.id %>
+    
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+
+    <br><br>
+
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,3 +1,38 @@
-<h1><%= @article.title %></h1>
+<%= link_to "Back", posts_path %>
 
-<p><%= @article.body %></p>
+<br />
+
+<%= link_to "Edit Post", edit_post_path(@post) %>
+
+<%= link_to "Delete Post", post_path(@post), method: :delete,
+  data: { confirm: "Are you sure?" } %>
+
+<h1>Title: <%= @post.title %></h1>
+
+<p>Body: <%= @post.body %></p>
+
+<span>Author: <%= @post.author.email %></p>
+
+<h3>Comments</h3>
+
+<ul>
+  <% @post.comments.each do |comment| %>
+    <li><%= comment.author.email %>: <%= comment.body %></li>
+  <% end %>
+</ul>
+
+
+<h1>New Comment</h1>
+
+<%= form_with model: @comment do |form| %>
+  <div>
+    <%= form.hidden_field :post_id, :value => @post.id %>
+    <%= form.hidden_field :author_id, :value => current_author.id %>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

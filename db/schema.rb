@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_20_101334) do
+ActiveRecord::Schema.define(version: 2021_03_20_162346) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "authors", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -20,16 +23,19 @@ ActiveRecord::Schema.define(version: 2021_03_20_101334) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fb_uid"
+    t.string "fb_token"
     t.index ["email"], name: "index_authors_on_email", unique: true
+    t.index ["fb_uid"], name: "index_authors_on_fb_uid"
     t.index ["reset_password_token"], name: "index_authors_on_reset_password_token", unique: true
   end
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
-    t.integer "post_id", null: false
+    t.bigint "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "author_id", null: false
+    t.bigint "author_id", null: false
     t.index ["author_id"], name: "index_comments_on_author_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
@@ -39,7 +45,7 @@ ActiveRecord::Schema.define(version: 2021_03_20_101334) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "author_id", null: false
+    t.bigint "author_id", null: false
     t.index ["author_id"], name: "index_posts_on_author_id"
   end
 
